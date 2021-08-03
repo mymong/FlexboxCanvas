@@ -1,0 +1,12 @@
+<Box style="justifyContent:spaceEvenly; alignItems:center">
+    <View style="padding:20; backgroundColor:orange" onLongPress="onBig" onRef="testReferenceView">
+        <View style="width:{width}; height:{height}; backgroundColor:yellow; borderRadius:20; touchableOpacity" onPress="onSmall"/>
+    </View>
+    <View style="width:40; height:40; backgroundColor:{color}" onPress="onRandomColor"/>
+    <Box style="flexDirection:row">
+        <View style="width:20; height:20; margin:8; borderRadius:10; backgroundColor:red"/>
+        <View style="width:20; height:20; margin:8; borderRadius:10; backgroundColor:green"/>
+        <View style="width:20; height:20; margin:8; borderRadius:10; backgroundColor:blue"/>
+    </Box>
+    <View style="width:60; height:30" nativeView="testNativeView"/>
+</Box>
