@@ -4,7 +4,7 @@
 ## 功能
 1. 使用Flexbox布局协议
 2. 使用XML进行布局描述
-3. 布局算法实现可按需定制（需实现FCLayoutNode接口），当前已有Yoga 1.14的实现
+3. 布局算法实现可按需定制（需实现FC_Node接口），当前已有Yoga 1.14的实现
 ```
 pod 'FlexboxCanvas', :subspecs => ['Canvas', 'YogaLayout_1_14']
 ```
@@ -89,16 +89,16 @@ pod 'FlexboxCanvas', :subspecs => ['Canvas', 'YogaLayout_1_14']
 3.  `overflow` 参考Box Style中的overflow，如果'hidden'则超出当前视图区域之外的内容将不被显示
 4.  `backgroundColor` 背景色，颜色
 5.  `borderColor` 边框色，颜色
-6.  `borderWidth` 边框宽度，浮点数
 7.  `borderRadius` 边框圆角，浮点数
+8.  `borderCorner` 边框圆角，数组，数据来源：all, topLeft, topRight, bottomLeft, bottomRight, top, bottom, left, right，默认all
 8.  `shadowColor` 阴影颜色
 9.  `shadowOffset` 阴影偏移
 10.  `shadowOpacity` 阴影透明度
 11. `shadowRadius` 阴影半径，羽化范围
-12.  `touchableOpacity` 触摸时是否有透明效果，如果给出值，则描述的是透明系数（默认0.7），即：触摸透明度=原始透明度*透明系数
 
 ### View Props
 1.  `nativeView`  自定义视图对象的标识名
+2.  `touchableOpacity` 触摸时是否有透明效果
 
 ### View Events
 1.  `onRef` 引用事件，当视图对象加入画布时触发，客户端持有引用视图时请注意使用`weak`声明
@@ -113,6 +113,14 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'FlexboxCanvas'
+```
+
+## Example
+
+```
+FCCanvasView *canvas = [[FCCanvasView alloc] initWithFrame:self.view.bounds];
+[self.view addSubview:canvas];
+[canvas loadXMLResource:@"test.xml" inBundle:nil];
 ```
 
 ## Author

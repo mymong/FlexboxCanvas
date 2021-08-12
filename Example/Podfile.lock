@@ -1,14 +1,17 @@
 PODS:
-  - FlexboxCanvas/Core (0.1.0):
+  - FlexboxCanvas (0.1.0):
+    - FlexboxCanvas/Foundation (= 0.1.0)
+    - FlexboxCanvas/Node_Yoga_1_14 (= 0.1.0)
+  - FlexboxCanvas/Foundation (0.1.0):
     - TBXML (~> 1.5)
-  - FlexboxCanvas/YogaLayout_1_14 (0.1.0):
-    - FlexboxCanvas/Core
+  - FlexboxCanvas/Node_Yoga_1_14 (0.1.0):
+    - FlexboxCanvas/Foundation
     - Yoga (~> 1.14)
   - TBXML (1.5)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
-  - FlexboxCanvas/YogaLayout_1_14 (from `../`)
+  - FlexboxCanvas (from `../`)
 
 SPEC REPOS:
   trunk:
@@ -20,10 +23,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  FlexboxCanvas: 14831f34ab3d3b36b55be243e737a29abe3afaa4
+  FlexboxCanvas: bc7445453e3e7dd4e10a5108eb7229a8729414d8
   TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
   Yoga: cff67a400f6b74dc38eb0bad4f156673d9aa980c
 
-PODFILE CHECKSUM: 8dcfcbe3c024b73e2f68b2f1c67c4f04a95f8137
+PODFILE CHECKSUM: 60cf8ab736c9980dc9aef8cb49207109a9b6f469
 
 COCOAPODS: 1.9.1

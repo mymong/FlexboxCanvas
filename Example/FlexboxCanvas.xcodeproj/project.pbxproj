@@ -9,15 +9,14 @@
 /* Begin PBXBuildFile section */
 		1073A3F5D816B53D43689B00 /* libPods-FlexboxCanvas_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 683EB23E7FDD4D34F0E75E10 /* libPods-FlexboxCanvas_Example.a */; };
 		3C75C57B26B3A81D00C01E67 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C75C57A26B3A81D00C01E67 /* libc++.tbd */; };
-		3C75C66026B7EAFF00C01E67 /* FCTestViewController02.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C75C65F26B7EAFF00C01E67 /* FCTestViewController02.m */; };
-		3C97BA4826A9CB3400AAD3A0 /* 001.xml in Resources */ = {isa = PBXBuildFile; fileRef = 3C97BA4726A9CB3400AAD3A0 /* 001.xml */; };
+		3C75C66026B7EAFF00C01E67 /* FCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C75C65F26B7EAFF00C01E67 /* FCTestViewController.m */; };
+		3C97BA4826A9CB3400AAD3A0 /* test.xml in Resources */ = {isa = PBXBuildFile; fileRef = 3C97BA4726A9CB3400AAD3A0 /* test.xml */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* FCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* FCAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* FCTestViewController01.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* FCTestViewController01.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
@@ -26,9 +25,9 @@
 /* Begin PBXFileReference section */
 		0BC8F2F38F578827A133BF87 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		3C75C57A26B3A81D00C01E67 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		3C75C65E26B7EAFF00C01E67 /* FCTestViewController02.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FCTestViewController02.h; sourceTree = "<group>"; };
-		3C75C65F26B7EAFF00C01E67 /* FCTestViewController02.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FCTestViewController02.m; sourceTree = "<group>"; };
-		3C97BA4726A9CB3400AAD3A0 /* 001.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 001.xml; sourceTree = "<group>"; };
+		3C75C65E26B7EAFF00C01E67 /* FCTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FCTestViewController.h; sourceTree = "<group>"; };
+		3C75C65F26B7EAFF00C01E67 /* FCTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FCTestViewController.m; sourceTree = "<group>"; };
+		3C97BA4726A9CB3400AAD3A0 /* test.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.xml; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* FlexboxCanvas_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlexboxCanvas_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -39,8 +38,6 @@
 		6003F59B195388D20070C39A /* FlexboxCanvas-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FlexboxCanvas-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* FCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FCAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* FCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FCAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* FCTestViewController01.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FCTestViewController01.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* FCTestViewController01.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FCTestViewController01.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		683EB23E7FDD4D34F0E75E10 /* libPods-FlexboxCanvas_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlexboxCanvas_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,7 +82,7 @@
 		3C97BA4626A9CB3400AAD3A0 /* xml */ = {
 			isa = PBXGroup;
 			children = (
-				3C97BA4726A9CB3400AAD3A0 /* 001.xml */,
+				3C97BA4726A9CB3400AAD3A0 /* test.xml */,
 			);
 			path = xml;
 			sourceTree = "<group>";
@@ -129,10 +126,8 @@
 				6003F59C195388D20070C39A /* FCAppDelegate.h */,
 				6003F59D195388D20070C39A /* FCAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				6003F5A5195388D20070C39A /* FCTestViewController01.h */,
-				6003F5A6195388D20070C39A /* FCTestViewController01.m */,
-				3C75C65E26B7EAFF00C01E67 /* FCTestViewController02.h */,
-				3C75C65F26B7EAFF00C01E67 /* FCTestViewController02.m */,
+				3C75C65E26B7EAFF00C01E67 /* FCTestViewController.h */,
+				3C75C65F26B7EAFF00C01E67 /* FCTestViewController.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				3C97BA4626A9CB3400AAD3A0 /* xml */,
@@ -227,7 +222,7 @@
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
-				3C97BA4826A9CB3400AAD3A0 /* 001.xml in Resources */,
+				3C97BA4826A9CB3400AAD3A0 /* test.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,8 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* FCAppDelegate.m in Sources */,
-				3C75C66026B7EAFF00C01E67 /* FCTestViewController02.m in Sources */,
-				6003F5A7195388D20070C39A /* FCTestViewController01.m in Sources */,
+				3C75C66026B7EAFF00C01E67 /* FCTestViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
