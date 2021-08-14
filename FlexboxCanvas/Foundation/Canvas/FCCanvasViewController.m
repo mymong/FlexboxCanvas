@@ -24,6 +24,7 @@
 
 - (BOOL)openURL:(NSURL *)url withEvent:(NSString *)event userInfo:(nullable NSDictionary *)userInfo sender:(id)sender {
     // To be overriden
+    NSLog(@"Should open url: %@", url);
     return NO;
 }
 

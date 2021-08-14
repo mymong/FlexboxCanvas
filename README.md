@@ -1,26 +1,25 @@
 # FlexboxCanvas
 
-
-## 功能
-1. 使用Flexbox布局协议
-2. 使用XML进行布局描述
-3. 布局算法实现可按需定制（需实现FC_Node接口），当前已有Yoga 1.14的实现
-```
-pod 'FlexboxCanvas', :subspecs => ['Canvas', 'YogaLayout_1_14']
-```
+使用XML描述的Flexbox布局的UI开发框架。
 
 ## 元素（Element）
-元素解析XML所描述的节点。
-1. <Box>容器元素，虚拟视图
-参与布局计算，为子元素提供坐标系
-2. <View>视图元素，通用视图
-参与布局计算，可配置基础视图样式和事件
+元素解析XML所描述的节点，包括：
+1. `<Box>` 容器
+2. `<View>` 视图
+3. `<Text>` 文本
+
+## 布局（Layout）
+Node是布局节点，Flexbox计算Node Tree的布局关系，得到所有Node的Frame，每个Node.frame中的位置值都是相对于其父节点的坐标系。
+该框架提供了抽象的节点协议，当前采用Yoga实现Flexbox布局，如果有需要，可以用其它库实现Flexbox布局。
 
 ## 组件（Component）
-组件实现元素所描述的能力。
+组件实现元素所描述的能力：
+1. Box组件实现`<Box>`元素，管理了一个Node节点对象，并提供了组件在布局过程中所需的抽象方法，是所有参与布局的组件的基类；但由于Box组件是一种虚拟视图，不会真实显示出来，所以只是作为组件的容器为子组件提供空间坐标系；
+2. View组件实现`<View>`元素，继承自Box组件，并管理了一个Native视图对象，作为真实视图，其View.frame的位置是相对于父视图SuperView的空间坐标系；
+3. Text组件实现`<Text>`元素，继承自View组件，管理的Native视图对象提供文本显示的能力，可配置文本的字体、颜色、阴影等；
 
 ## 键（key）
-元素的key属性是可选常量，如果未提供会自动生成默认值，将据此实现组件的`重用`能力。
+元素的key属性是可选常量，如果未提供会自动生成默认值，将据此实现组件和`重用`能力。
 ```
 <View key="container">
 ```
@@ -41,7 +40,7 @@ pod 'FlexboxCanvas', :subspecs => ['Canvas', 'YogaLayout_1_14']
 
 ## 变量
 1. 变量可用于元素的除`key`之外的所有属性值
-2. 使用`{字符串}`来描述变量名，通常用路径表示法，如：{user/name}
+2. 使用`{变量名}`来描述变量名，通常用路径表示法，如：{user/name}
 3. 组件渲染过程中，在将元素样式字符串转换为组件样式字典的时候会从`Canvas`获取所有变量的值
 
 ## 事件
@@ -50,7 +49,7 @@ pod 'FlexboxCanvas', :subspecs => ['Canvas', 'YogaLayout_1_14']
 3. 使用字符串描述消息，通常用路径表示法，可带变量参数，如：onPress=“alert?message=欢迎{user/name}”同学
 4. 当事件触发时，将会向`Canvas`发送事件及消息
 
-## <Box>
+## `<Box>` 虚拟视图
 ## Box Style
 1.  `direction` 书写方向，枚举值：inherit, ltr, rtl
 2.  `flexDirection` 主轴方向，枚举值：column, columnReverse, row, rowReverse
@@ -82,15 +81,16 @@ pod 'FlexboxCanvas', :subspecs => ['Canvas', 'YogaLayout_1_14']
 28.  `maxSize` `maxWidth` `maxHeight`
 29.  `aspectRatio` 宽高比，比例或浮点数，如 3:2 或 1.5
 
-## <View> 基础视图
+## `<View>` 基础视图
 ### View Style
 1. 继承自Box Style
 2.  `opacity` 透明度，0 ~ 1的浮点数
 3.  `overflow` 参考Box Style中的overflow，如果'hidden'则超出当前视图区域之外的内容将不被显示
 4.  `backgroundColor` 背景色，颜色
 5.  `borderColor` 边框色，颜色
+6.  四边的厚度取决于Box Style中的`border`及各种`border*`属性
 7.  `borderRadius` 边框圆角，浮点数
-8.  `borderCorner` 边框圆角，数组，数据来源：all, topLeft, topRight, bottomLeft, bottomRight, top, bottom, left, right，默认all
+8.  `borderCorner` 边框圆角，数组：all, topLeft, topRight, bottomLeft, bottomRight, top, bottom, left, right，默认all
 8.  `shadowColor` 阴影颜色
 9.  `shadowOffset` 阴影偏移
 10.  `shadowOpacity` 阴影透明度
@@ -104,6 +104,22 @@ pod 'FlexboxCanvas', :subspecs => ['Canvas', 'YogaLayout_1_14']
 1.  `onRef` 引用事件，当视图对象加入画布时触发，客户端持有引用视图时请注意使用`weak`声明
 2.  `onPress` 点击事件
 3.  `onLongPress` 长按事件
+
+## `<Text>` 文本视图
+### Text Style
+1. 继承自View Style
+2.  `fontSize` 字体大小，默认14
+3.  `fontName` 字体名
+4.  `fontStyle` 字体样式，枚举值："normal", "italic", "bold"
+5.  `fontWeight` 字体粗细，整数值：0(默认), 100, 200, 300, 400, 500, 600, 700, 800, 900
+6.  `textColor` 字体颜色，默认黑色
+7.  `textAlign` 字体水平对其方式，枚举值："left", "center", "right", "justify", "auto"
+8.  `lineBreak` 断行模式，枚举值："wordWrapping", "charWrapping", "clipping", "truncatingHead", "truncatingTail", "truncatingMiddle"
+9.  `textShadowColor` 文本阴影颜色
+10.  `textShadowOffset` 文本阴影偏移
+11.  `textShadowRadius` 文本阴影模糊半径（羽化半径）
+12.  `numberOfLines` 文本最大行数，整数：0(无限制), 1, 2, 3, ...
+13.  `sizeMode` 自动尺寸模式，枚举值："inherit", "fitWidth"(高度适应宽度), "fitHeight"(宽度适应高度)
 
 
 ## Installation
@@ -122,6 +138,8 @@ FCCanvasView *canvas = [[FCCanvasView alloc] initWithFrame:self.view.bounds];
 [self.view addSubview:canvas];
 [canvas loadXMLResource:@"test.xml" inBundle:nil];
 ```
+<img src="http://pic.yupoo.com/mymong/8574de7b/3df1d694.png" width="320"/>
+<img src="http://pic.yupoo.com/mymong/e126557c/e858b54f.png" height="290"/>
 
 ## Author
 

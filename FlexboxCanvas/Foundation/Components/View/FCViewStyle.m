@@ -16,7 +16,7 @@
 - (void)reset {
     [super reset];
     _opacity = 1;
-    _backgroundColor = nil;
+    _backgroundColor = [UIColor clearColor];
     _borderColor = nil;
     _borderRadius = 0;
     _borderCorner = UIRectCornerAllCorners;

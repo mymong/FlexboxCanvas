@@ -1,10 +1,10 @@
 PODS:
-  - FlexboxCanvas (0.1.0):
-    - FlexboxCanvas/Foundation (= 0.1.0)
-    - FlexboxCanvas/Node_Yoga_1_14 (= 0.1.0)
-  - FlexboxCanvas/Foundation (0.1.0):
+  - FlexboxCanvas (0.2.0):
+    - FlexboxCanvas/Foundation (= 0.2.0)
+    - FlexboxCanvas/Node_Yoga_1_14 (= 0.2.0)
+  - FlexboxCanvas/Foundation (0.2.0):
     - TBXML (~> 1.5)
-  - FlexboxCanvas/Node_Yoga_1_14 (0.1.0):
+  - FlexboxCanvas/Node_Yoga_1_14 (0.2.0):
     - FlexboxCanvas/Foundation
     - Yoga (~> 1.14)
   - TBXML (1.5)
@@ -23,7 +23,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  FlexboxCanvas: bc7445453e3e7dd4e10a5108eb7229a8729414d8
+  FlexboxCanvas: 48e691b182e584101c893c02c168ee527dd0534b
   TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
   Yoga: cff67a400f6b74dc38eb0bad4f156673d9aa980c
 
