@@ -40,19 +40,6 @@
     FCViewStyle *style = [props style];
     float borderRadius = [style borderRadius];
     UIRectCorner borderCorner = [style borderCorner];
-    BOOL isAllCorner = (0 != (borderCorner & UIRectCornerTopLeft) &&
-                        0 != (borderCorner & UIRectCornerTopRight) &&
-                        0 != (borderCorner & UIRectCornerBottomLeft) &&
-                        0 != (borderCorner & UIRectCornerBottomRight));
-    
-    UIBezierPath *borderOuterPath = nil;
-    if (borderRadius > 0) {
-        if (isAllCorner) {
-            borderOuterPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:borderRadius];
-        } else {
-            borderOuterPath = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:borderCorner cornerRadii:CGSizeMake(borderRadius, borderRadius)];
-        }
-    }
     
     view.clipsToBounds = style.clipToBounds;
     view.alpha = style.opacity;
@@ -64,18 +51,27 @@
     layer.shadowRadius = style.shadowRadius;
     if (style.shadowColor) {
         layer.shadowColor = style.shadowColor.CGColor;
-        layer.shadowPath = borderOuterPath ? borderOuterPath.CGPath : nil;
+        if (borderRadius > 0 && 0 != borderCorner) {
+            layer.shadowPath = [self pathWithRect:rect radius:borderRadius corners:borderCorner].CGPath;
+        } else {
+            layer.shadowPath = nil;
+        }
     } else {
         layer.shadowColor = nil;
         layer.shadowPath = nil;
     }
+    
+    BOOL isAllCorners = (0 != (borderCorner & UIRectCornerTopLeft) &&
+                         0 != (borderCorner & UIRectCornerTopRight) &&
+                         0 != (borderCorner & UIRectCornerBottomLeft) &&
+                         0 != (borderCorner & UIRectCornerBottomRight));
     
     UIEdgeInsets border = [style border];
     if (border.left > 0 &&
         border.left == border.top &&
         border.left == border.right &&
         border.left == border.bottom &&
-        isAllCorner
+        isAllCorners
         ) {
         layer.borderColor = style.borderColor.CGColor;
         layer.borderWidth = border.left;
@@ -86,33 +82,19 @@
         layer.borderWidth = 0;
         layer.cornerRadius = 0;
         
-        if (borderOuterPath) {
+        if (borderRadius > 0 && 0 != borderCorner) {
             CAShapeLayer *maskLayer = [CAShapeLayer layer];
-            maskLayer.path = borderOuterPath.CGPath;
+            maskLayer.path = [self pathWithRect:rect radius:borderRadius corners:borderCorner].CGPath;
             layer.mask = maskLayer;
-            layer.masksToBounds = YES;
         } else {
             layer.mask = nil;
-            layer.masksToBounds = NO;
         }
         
         if (style.borderColor && (border.left > 0 || border.top > 0 || border.right > 0 || border.bottom > 0)) {
             CAShapeLayer *borderLayter = [CAShapeLayer layer];
-            borderLayter.backgroundColor = style.borderColor.CGColor;
-            borderLayter.path = borderOuterPath.CGPath;
+            borderLayter.path = [self pathForBorder:border withRect:rect radius:borderRadius corners:borderCorner].CGPath;
+            borderLayter.fillColor = style.borderColor.CGColor;
             borderLayter.zPosition = 100; //置顶
-            
-            UIBezierPath *borderPath = [UIBezierPath bezierPathWithRect:rect];
-            rect.origin.x = border.left;
-            rect.origin.y = border.top;
-            rect.size.width -= border.left + border.right;
-            rect.size.height -= border.top + border.bottom;
-            UIBezierPath *borderInnerPath = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:borderCorner cornerRadii:CGSizeMake(borderRadius, borderRadius)];
-            [borderPath appendPath:borderInnerPath.bezierPathByReversingPath];
-            CAShapeLayer *maskLayer = [CAShapeLayer layer];
-            maskLayer.path = borderPath.CGPath;
-            borderLayter.mask = maskLayer;
-            
             view.fc_borderLayter = borderLayter;
         } else {
             view.fc_borderLayter = nil;
@@ -221,6 +203,29 @@
     }
     
     return [self createManagedView];
+}
+
+- (UIBezierPath *)pathWithRect:(CGRect)rect radius:(float)radius corners:(UIRectCorner)corners {
+    if (0 == corners) {
+        return [UIBezierPath bezierPathWithRect:rect];
+    }
+    
+    if (0 == (corners & UIRectCornerTopLeft) || 0 == (corners & UIRectCornerTopRight) || 0 == (corners & UIRectCornerBottomLeft) || 0 == (corners & UIRectCornerBottomRight)) {
+        return [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
+    }
+    
+    return [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:radius];
+}
+
+- (UIBezierPath *)pathForBorder:(UIEdgeInsets)border withRect:(CGRect)rect radius:(float)radius corners:(UIRectCorner)corners {
+    UIBezierPath *path = [self pathWithRect:rect radius:radius corners:corners];
+    rect.origin.x += border.left;
+    rect.origin.y += border.top;
+    rect.size.width -= border.left + border.right;
+    rect.size.height -= border.top + border.bottom;
+    UIBezierPath *hollowedPath = [self pathWithRect:rect radius:radius corners:corners];
+    [path appendPath:hollowedPath.bezierPathByReversingPath];
+    return path;
 }
 
 #pragma mark FCComponent

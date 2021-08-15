@@ -43,6 +43,7 @@ Pod::Spec.new do |s|
   s.subspec 'Foundation' do |p|
     p.source_files = 'FlexboxCanvas/Foundation/**/*'
     p.dependency 'TBXML', '~> 1.5'
+    p.dependency 'SDWebImage'
   end
   
   s.subspec 'Node_Yoga_1_14' do |p|

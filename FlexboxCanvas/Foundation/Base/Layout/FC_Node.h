@@ -11,8 +11,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol FC_Node <NSObject>
 - (void)setStyle:(FC_Style *)styleRef;
-- (void)setStyleSize:(CGSize)size;
 - (void)setSubnodes:(nullable NSArray<id<FC_Node>> *)subnodes;
+- (void)setStyleSize:(CGSize)size;
+- (float)aspectRatio;
+- (void)setAspectRatio:(float)aspectRatio;
 - (void)calculateInSize:(CGSize)size;
 - (CGRect)frame;
 @end

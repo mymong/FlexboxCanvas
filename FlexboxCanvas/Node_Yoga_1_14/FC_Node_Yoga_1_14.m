@@ -59,11 +59,6 @@
     YGNodeStyleSetAspectRatio(_nodeRef, styleRef->aspectRatio);
 }
 
-- (void)setStyleSize:(CGSize)size {
-    YGNodeStyleSetWidth(_nodeRef, size.width);
-    YGNodeStyleSetHeight(_nodeRef, size.height);
-}
-
 - (void)setSubnodes:(NSArray<id<FC_Node>> *)subnodes {
     YGNodeRemoveAllChildren(_nodeRef);
     if (subnodes) {
@@ -71,6 +66,19 @@
             YGNodeInsertChild(_nodeRef, node.nodeRef, YGNodeGetChildCount(_nodeRef));
         }
     }
+}
+
+- (void)setStyleSize:(CGSize)size {
+    YGNodeStyleSetWidth(_nodeRef, size.width);
+    YGNodeStyleSetHeight(_nodeRef, size.height);
+}
+
+- (float)aspectRatio {
+    return YGNodeStyleGetAspectRatio(_nodeRef);
+}
+
+- (void)setAspectRatio:(float)aspectRatio {
+    YGNodeStyleSetAspectRatio(_nodeRef, aspectRatio);
 }
 
 - (void)calculateInSize:(CGSize)size {
