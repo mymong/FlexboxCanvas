@@ -14,9 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSDictionary<NSString *, NSString *> *attributes; //元素属性
 @property (nonatomic, readonly, nullable) NSArray<FCElement *> *children; //子元素表
 @property (nonatomic, readonly) NSString *key;
-@end
-
-@interface FCElement (FCElementFactory)
+- (instancetype)initWithName:(NSString *)name attributes:(NSDictionary *)attributes children:(NSArray *)children defaultKey:(NSString *)defaultKey;
 + (nullable FCElement *)elementWithXMLString:(NSString *)string;
 + (nullable FCElement *)elementWithXMLResource:(NSString *)name inBundle:(nullable NSBundle *)bundle;
 @end
