@@ -9,8 +9,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface FCBorderLayer : CAShapeLayer
+@property (nonatomic) UIColor *color;
+@property (nonatomic) UIEdgeInsets insets;
+@property (nonatomic) CGFloat radius;
+@property (nonatomic) UIRectCorner corners;
+@end
+
 @interface UIView (FCBorderLayer)
-@property (nonatomic, nullable) CALayer *fc_borderLayter;
+@property (nonatomic, nullable) FCBorderLayer *fc_borderLayer;
 @end
 
 NS_ASSUME_NONNULL_END

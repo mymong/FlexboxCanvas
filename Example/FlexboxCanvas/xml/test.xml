@@ -6,13 +6,13 @@
         <Text style="flex:1; textAlign:center; textColor:white; fontWeight:500" text="😊"/>
     </View>
     <Box style="flexDirection:row">
-        <View style="width:20; height:20; marginRight:2; borderRadius:10; borderCorner:topLeft; backgroundColor:red"/>
-        <View style="width:20; height:40; marginHorizontal:2; borderRadius:10; borderCorner:bottom; backgroundColor:green"/>
-        <View style="width:20; height:20; marginLeft:2; borderRadius:10; borderCorner:topRight; backgroundColor:blue"/>
+        <View style="width:20; height:20; marginRight:2; borderRadius:10; borderCorners:topLeft; backgroundColor:red"/>
+        <View style="width:20; height:40; marginHorizontal:2; borderRadius:10; borderCorners:bottom; backgroundColor:green"/>
+        <View style="width:20; height:20; marginLeft:2; borderRadius:10; borderCorners:topRight; backgroundColor:blue"/>
     </Box>
-    <View style="border:10; borderTop:20; borderBottom:1; borderRight:0; borderRadius:30; borderCorner:left; borderColor:black; backgroundColor:blue; justifyContent:center;">
+    <View style="border:10; borderTop:20; borderBottom:1; borderRight:0; borderRadius:30; borderCorners:left; borderColor:black; backgroundColor:blue; justifyContent:center;">
         <View nativeView="nativeLabelView" style="width:150; height:30; backgroundColor:yellow"/>
         <Text style="width:150; textAlign:center; paddingHorizontal:16; fontStyle:italic; backgroundColor:skyBlue" text="Hello World FlexboxCanvas" link="https://github.com/mymong/FlexboxCanvas"/>
     </View>
-    <Image style="width:185; contentMode:contain; borderHorizontal:50; backgroundColor:red; borderColor:blue; borderRadius:0; shadowColor:yellow; shadowOffset:10,10; shadowRadius:8; overflow:hidden" uri="https://pic.yupoo.com/mymong/e126557c/e858b54f.png"/>
+    <Image style="width:185; contentMode:contain; borderHorizontal:50; backgroundColor:red; borderColor:blue; borderRadius:0; shadowColor:yellow; shadowOffset:10,10; shadowRadius:8; overflow:hidden" uri="https://pic.yupoo.com/mymong/bfe9025e/0a3826c8.png"/>
 </Box>

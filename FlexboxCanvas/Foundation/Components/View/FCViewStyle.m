@@ -19,7 +19,7 @@
     _backgroundColor = [UIColor clearColor];
     _borderColor = nil;
     _borderRadius = 0;
-    _borderCorner = UIRectCornerAllCorners;
+    _borderCorners = UIRectCornerAllCorners;
     _shadowColor = nil;
     _shadowOffset = CGSizeZero;
     _shadowOpacity = 0;
@@ -46,9 +46,9 @@
     _borderRadius = [str fc_floatValueWithDefault:0 minValue:0];
 }
 
-- (void)set_borderCorner:(NSString *)str {
+- (void)set_borderCorners:(NSString *)str {
     if (0 == str.length) {
-        _borderCorner = UIRectCornerAllCorners;
+        _borderCorners = UIRectCornerAllCorners;
     } else {
         UIRectCorner corner = 0;
         NSArray *comps = [str componentsSeparatedByString:FCArrayComponentSeparator];
@@ -77,7 +77,7 @@
                 corner |= UIRectCornerBottomRight;
             }
         }
-        _borderCorner = corner;
+        _borderCorners = corner;
     }
 }
 

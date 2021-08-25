@@ -90,7 +90,7 @@ Node是布局节点，Flexbox计算Node Tree的布局关系，得到所有Node�
 5.  `borderColor` 边框色，颜色
 6.  四边的厚度取决于Box Style中的`border`及各种`border*`属性
 7.  `borderRadius` 边框圆角，浮点数
-8.  `borderCorner` 边框圆角，数组：all, topLeft, topRight, bottomLeft, bottomRight, top, bottom, left, right，默认all
+8.  `borderCorners` 边框圆角，数组：all, topLeft, topRight, bottomLeft, bottomRight, top, bottom, left, right，默认all
 8.  `shadowColor` 阴影颜色
 9.  `shadowOffset` 阴影偏移
 10.  `shadowOpacity` 阴影透明度

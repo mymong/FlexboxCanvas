@@ -39,7 +39,7 @@
     
     FCViewStyle *style = [props style];
     float borderRadius = [style borderRadius];
-    UIRectCorner borderCorner = [style borderCorner];
+    UIRectCorner borderCorners = [style borderCorners];
     
     view.clipsToBounds = style.clipToBounds;
     view.alpha = style.opacity;
@@ -51,8 +51,8 @@
     layer.shadowRadius = style.shadowRadius;
     if (style.shadowColor) {
         layer.shadowColor = style.shadowColor.CGColor;
-        if (borderRadius > 0 && 0 != borderCorner) {
-            layer.shadowPath = [self pathWithRect:rect radius:borderRadius corners:borderCorner].CGPath;
+        if (borderRadius > 0 && 0 != borderCorners) {
+            layer.shadowPath = [self pathWithRect:rect radius:borderRadius corners:borderCorners].CGPath;
         } else {
             layer.shadowPath = nil;
         }
@@ -61,43 +61,19 @@
         layer.shadowPath = nil;
     }
     
-    BOOL isAllCorners = (0 != (borderCorner & UIRectCornerTopLeft) &&
-                         0 != (borderCorner & UIRectCornerTopRight) &&
-                         0 != (borderCorner & UIRectCornerBottomLeft) &&
-                         0 != (borderCorner & UIRectCornerBottomRight));
-    
-    UIEdgeInsets border = [style border];
-    if (border.left > 0 &&
-        border.left == border.top &&
-        border.left == border.right &&
-        border.left == border.bottom &&
-        isAllCorners
-        ) {
-        layer.borderColor = style.borderColor.CGColor;
-        layer.borderWidth = border.left;
-        layer.cornerRadius = borderRadius;
-        view.fc_borderLayter = nil;
-    } else {
-        layer.borderColor = nil;
-        layer.borderWidth = 0;
-        layer.cornerRadius = 0;
-        
-        if (borderRadius > 0 && 0 != borderCorner) {
-            CAShapeLayer *maskLayer = [CAShapeLayer layer];
-            maskLayer.path = [self pathWithRect:rect radius:borderRadius corners:borderCorner].CGPath;
-            layer.mask = maskLayer;
-        } else {
-            layer.mask = nil;
+    FCBorderLayer *borderLayer = view.fc_borderLayer;
+    if (style.borderRadius > 0 || !UIEdgeInsetsEqualToEdgeInsets(style.border, UIEdgeInsetsZero)) {
+        if (!borderLayer) {
+            view.fc_borderLayer = borderLayer = [FCBorderLayer layer];
         }
-        
-        if (style.borderColor && (border.left > 0 || border.top > 0 || border.right > 0 || border.bottom > 0)) {
-            CAShapeLayer *borderLayter = [CAShapeLayer layer];
-            borderLayter.path = [self pathForBorder:border withRect:rect radius:borderRadius corners:borderCorner].CGPath;
-            borderLayter.fillColor = style.borderColor.CGColor;
-            borderLayter.zPosition = 100; //置顶
-            view.fc_borderLayter = borderLayter;
-        } else {
-            view.fc_borderLayter = nil;
+        borderLayer.color = style.borderColor;
+        borderLayer.insets = style.border;
+        borderLayer.radius = style.borderRadius;
+        borderLayer.corners = style.borderCorners;
+        [borderLayer setNeedsLayout];
+    } else {
+        if (borderLayer) {
+            view.fc_borderLayer = nil;
         }
     }
 }
@@ -303,6 +279,11 @@
 - (void)moveManagedView {
     if (_view) {
         _view.frame = [self frame];
+        
+        FCBorderLayer *borderLayer = _view.fc_borderLayer;
+        if (borderLayer) {
+            [borderLayer setNeedsLayout];
+        }
     }
 }
 

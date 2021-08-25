@@ -73,9 +73,6 @@
     dispatch_async([self calculationQueue], ^{
         [self startLayoutHierachy];
         [self calculateLayout:size];
-//        if ([self secondLayoutHierachy]) {
-//            [self calculateLayout:size];
-//        }
         [self finishLayoutHierachy];
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self finishComponentHierachy];
@@ -180,13 +177,6 @@
         [_root.node calculateInSize:size];
     }
 }
-
-//- (NSUInteger)secondLayoutHierachy {
-//    if (_root) {
-//        return [_root secondLayoutHierachy];
-//    }
-//    return 0;
-//}
 
 - (void)finishLayoutHierachy {
     if (_root) {
