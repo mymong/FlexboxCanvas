@@ -346,15 +346,15 @@
     }
 }
 
-- (NSUInteger)secondLayoutHierachy {
-    NSUInteger num = 0;
-    if (_children) {
-        for (FCComponent *child in _children) {
-            num += [child secondLayoutHierachy];
-        }
-    }
-    return num;
-}
+//- (NSUInteger)secondLayoutHierachy {
+//    NSUInteger num = 0;
+//    if (_children) {
+//        for (FCComponent *child in _children) {
+//            num += [child secondLayoutHierachy];
+//        }
+//    }
+//    return num;
+//}
 
 - (void)finishLayoutHierachy {
     [self finishNode];

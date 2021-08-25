@@ -119,7 +119,6 @@ Node是布局节点，Flexbox计算Node Tree的布局关系，得到所有Node�
 10.  `textShadowOffset` 文本阴影偏移
 11.  `textShadowRadius` 文本阴影模糊半径（羽化半径）
 12.  `numberOfLines` 文本最大行数，整数：0(无限制), 1, 2, 3, ...
-13.  `sizeMode` 自动尺寸模式，枚举值："inherit", "fitWidth"(高度适应宽度), "fitHeight"(宽度适应高度)
 
 
 ## Installation

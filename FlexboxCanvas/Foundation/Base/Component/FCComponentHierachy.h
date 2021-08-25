@@ -14,8 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startComponentHierachy;
 ///【开始布局】【次线程】重新连接布局树，样式的解析和应用。
 - (void)startLayoutHierachy;
-///【二次布局】【次线程】遍历布局树，对于动态尺寸的组件，进行二次布局。
-- (NSUInteger)secondLayoutHierachy;
+/////【二次布局】【次线程】遍历布局树，对于动态尺寸的组件，进行二次布局。
+//- (NSUInteger)secondLayoutHierachy;
 ///【结束布局】【次线程】遍历布局树，进行后处理，对布局的结果坐标进行调整。
 - (void)finishLayoutHierachy;
 ///【结束渲染】【主线程】遍历组件树，进行后处理，对托管的视图对象进行配置。

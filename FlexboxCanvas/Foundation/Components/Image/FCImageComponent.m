@@ -11,8 +11,22 @@
 #import "FC_Node.h"
 #import <UIKit/UIKit.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/SDImageCache.h>
+
+@interface FCImageComponent () <FC_Measurer>
+@property (nonatomic) NSString *lastUri;
+@property (nonatomic) CGSize lastSize;
+@end
 
 @implementation FCImageComponent
+
+- (instancetype)initWithElement:(FCElement *)element {
+    if (self = [super initWithElement:element]) {
+        _lastUri = @"";
+        _lastSize = CGSizeZero;
+    }
+    return self;
+}
 
 #pragma mark FCViewComponent
 
@@ -35,56 +49,123 @@
         view.tintColor = style.tintColor;
     }
     
-    NSString *uri = props.uri;
-    if (uri && uri.length > 0) {
-        NSURL *url = [NSURL URLWithString:uri];
-        if (url.scheme.length > 0) {
-            __weak __typeof(self) weakSelf = self;
-            __weak __typeof(view) weakView = view;
-            [view sd_setImageWithURL:url completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                if (image) {
-                    __strong __typeof(weakSelf) self = weakSelf;
-                    if (self && image) {
-                        [self onLoadImage:image forURI:uri];
-                    }
-                    __strong __typeof(weakView) view = weakView;
-                    if (style.tintColor && image && image.renderingMode != UIImageRenderingModeAlwaysTemplate) {
-                        view.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-                    }
-                }
-            }];
-        }
-        else {
-            UIImage *image = [UIImage imageNamed:uri];
+    NSString *uri = props.uri ?: @"";
+    NSURL *url = [NSURL URLWithString:uri];
+    
+    if (url && url.scheme.length > 0) {
+        __weak __typeof(self) weakSelf = self;
+        __weak __typeof(view) weakView = view;
+        [view sd_setImageWithURL:url completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            __strong __typeof(weakSelf) self = weakSelf;
+            [self onLoadImage:image forURI:uri];
             if (image) {
-                [self onLoadImage:image forURI:uri];
-                if (style.tintColor && image.renderingMode != UIImageRenderingModeAlwaysTemplate) {
-                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                __strong __typeof(weakView) view = weakView;
+                if (style.tintColor && image && image.renderingMode != UIImageRenderingModeAlwaysTemplate) {
+                    view.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                 }
             }
-            view.image = image;
+        }];
+    }
+    else {
+        UIImage *image = [UIImage imageNamed:uri];
+        [self onLoadImage:image forURI:uri];
+        if (image) {
+            if (style.tintColor && image.renderingMode != UIImageRenderingModeAlwaysTemplate) {
+                image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            }
         }
-    } else {
-        view.image = nil;
+        view.image = image;
     }
 }
 
-- (void)onLoadImage:(UIImage *)image forURI:(NSString *)uri {
-    FCImageProps *props = [self props];
-    FCImageStyle *style = [props style];
-    FC_Style *styleRef = style.styleRef;
-    if (styleRef && isnan(styleRef->aspectRatio)) {
-        if (isnan(styleRef->dimension[FC_Dimension_Width]) || isnan(styleRef->dimension[FC_Dimension_Height])) {
-            CGSize size = image.size;
-            if (size.width > 0 && size.height > 0) {
-                float aspectRatio = size.width / size.height;
-                if (aspectRatio != [self.node aspectRatio]) {
-                    [self.node setAspectRatio:aspectRatio];
-                    [self notifyWaitingDirty];
-                }
-            }
+#pragma mark <FC_Measurer>
+
+- (CGSize)measureInSize:(CGSize)size widthMode:(FC_MeasurerMode)widthMode heightMode:(FC_MeasurerMode)heightMode {
+    CGSize newSize = [self contentSizeThatFits:size];
+//    newSize.width += FCRoundPixelValue(0.1);
+//    newSize.height += FCRoundPixelValue(0.1);
+    if (FC_MeasurerMode_Exactly == widthMode) {
+        newSize.width = size.width;
+    }
+    if (FC_MeasurerMode_Exactly == heightMode) {
+        newSize.height = size.height;
+    }
+    return newSize;
+}
+
+#pragma mark Private
+
+- (CGSize)contentSizeThatFits:(CGSize)size {
+    CGSize imageSize = [self cachedImageSize];
+    
+    if (size.width > imageSize.width) {
+        size.width = imageSize.width;
+    }
+    if (size.height > imageSize.height) {
+        size.height = imageSize.height;
+    }
+    
+    if (imageSize.width > 0) {
+        CGFloat height = size.width / imageSize.width * imageSize.height;
+        if (size.height > height) {
+            size.height = height;
         }
     }
+    if (imageSize.height > 0) {
+        CGFloat width = size.height / imageSize.height * imageSize.width;
+        if (size.width > width) {
+            size.width = width;
+        }
+    }
+    if (imageSize.width > 0) {
+        CGFloat height = size.width / imageSize.width * imageSize.height;
+        if (size.height > height) {
+            size.height = height;
+        }
+    }
+    
+//    size.width = FCRoundPixelValue(size.width);
+//    size.height = FCRoundPixelValue(size.height);
+    return size;
+}
+
+- (void)onLoadImage:(UIImage *)image forURI:(NSString *)uri {
+    CGSize oldSize = CGSizeZero;
+    if ([uri isEqualToString:self.lastUri]) {
+        oldSize = self.lastSize;
+    }
+    
+    CGSize newSize = CGSizeZero;
+    if (image) {
+        newSize = image.size;
+    }
+    
+    self.lastUri = uri;
+    self.lastSize = newSize;
+    
+    if (!CGSizeEqualToSize(oldSize, newSize)) {
+        [self.node markDirty];
+        [self notifyWaitingDirty];
+    }
+}
+
+- (CGSize)cachedImageSize {
+    FCImageProps *props = self.props;
+    NSString *uri = props.uri ?: @"";
+    
+    if (![uri isEqualToString:self.lastUri]) {
+        CGSize size = CGSizeZero;
+        if (uri) {
+            UIImage *image = [[SDImageCache sharedImageCache] imageFromCacheForKey:uri];
+            if (image) {
+                size = [image size];
+            }
+        }
+        self.lastUri = uri;
+        self.lastSize = size;
+    }
+    
+    return self.lastSize;
 }
 
 @end

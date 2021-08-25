@@ -13,12 +13,6 @@ typedef NS_ENUM(NSInteger, FCTextFontStyle) {
     FCTextFontStyleBold,
 };
 
-typedef NS_ENUM(NSInteger, FCTextSizeMode) {
-    FCTextSizeModeInherit,
-    FCTextSizeModeFitWidth,
-    FCTextSizeModeFitHeight,
-};
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FCTextStyle : FCViewStyle
@@ -33,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CGSize textShadowOffset;
 @property (nonatomic, readonly) float textShadowRadius;
 @property (nonatomic, readonly) NSInteger numberOfLines;
-@property (nonatomic, readonly) FCTextSizeMode sizeMode;
 @end
 
 @interface FCTextStyle (Helper)

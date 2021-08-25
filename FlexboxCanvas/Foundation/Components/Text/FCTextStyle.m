@@ -17,7 +17,6 @@
 static NSArray<NSString *> *FCEnumStrsFontStyle;
 static NSArray<NSString *> *FCEnumStrsTextAlign;
 static NSArray<NSString *> *FCEnumStrsLineBreak;
-static NSArray<NSString *> *FCEnumStrsSizeMode;
 
 void FC_EnumStrs_Setup_TextStyle(void) {
     static dispatch_once_t onceToken;
@@ -25,7 +24,6 @@ void FC_EnumStrs_Setup_TextStyle(void) {
         FCEnumStrsFontStyle = @[@"normal", @"italic", @"bold"];
         FCEnumStrsTextAlign = @[@"left", @"center", @"right", @"justify", @"auto"];
         FCEnumStrsLineBreak = @[@"wordWrapping", @"charWrapping", @"clipping", @"truncatingHead", @"truncatingTail", @"truncatingMiddle"];
-        FCEnumStrsSizeMode = @[@"inherit", @"fitWidth", @"fitHeight"];
     });
 }
 
@@ -51,7 +49,6 @@ void FC_EnumStrs_Setup_TextStyle(void) {
     _textShadowOffset = CGSizeZero;
     _textShadowRadius = 0;
     _numberOfLines = 0;
-    _sizeMode = FCTextSizeModeInherit;
 }
 
 - (void)set_fontSize:(NSString *)str {
@@ -96,10 +93,6 @@ void FC_EnumStrs_Setup_TextStyle(void) {
 
 - (void)set_numberOfLines:(NSString *)str {
     _numberOfLines = [str fc_integerValueWithDefault:0 minValue:0];
-}
-
-- (void)set_sizeMode:(NSString *)str {
-    _sizeMode = [FCEnumStrsSizeMode fc_enumValueForStr:str defaultValue:FCTextSizeModeInherit];
 }
 
 @end

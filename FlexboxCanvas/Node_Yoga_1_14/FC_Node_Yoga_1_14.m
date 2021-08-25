@@ -10,7 +10,26 @@
 
 @interface FC_Node_Yoga_1_14 ()
 @property (nonatomic, readonly) YGNodeRef nodeRef;
+@property (nonatomic, weak, nullable) id<FC_Measurer> measurer;
 @end
+
+static YGSize FC_Node_Yoga_1_14_measureFunc(YGNodeRef node, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode) {
+    FC_Node_Yoga_1_14 *obj = (__bridge FC_Node_Yoga_1_14 *)YGNodeGetContext(node);
+    if (obj && obj.measurer) {
+        CGSize cgSize = [obj.measurer measureInSize:CGSizeMake(width, height) widthMode:(FC_MeasurerMode)widthMode heightMode:(FC_MeasurerMode)heightMode];
+        YGSize ygSize = {cgSize.width, cgSize.height};
+        return ygSize;
+    } else {
+        YGSize ygSize = {width, height};
+        if (widthMode != YGMeasureModeExactly) {
+            ygSize.width = 0;
+        }
+        if (heightMode != YGMeasureModeExactly) {
+            ygSize.height = 0;
+        }
+        return ygSize;
+    }
+}
 
 @implementation FC_Node_Yoga_1_14
 
@@ -25,6 +44,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         _nodeRef = YGNodeNew();
+        YGNodeSetContext(_nodeRef, (__bridge void *)self);
     }
     return self;
 }
@@ -66,11 +86,33 @@
             YGNodeInsertChild(_nodeRef, node.nodeRef, YGNodeGetChildCount(_nodeRef));
         }
     }
+    [self configMeasureFunc];
+}
+
+- (void)setMeasurer:(id<FC_Measurer>)measurer {
+    _measurer = measurer;
+    [self configMeasureFunc];
+}
+
+- (void)configMeasureFunc {
+    if (_measurer && 0 == YGNodeGetChildCount(_nodeRef)) {
+        if (!YGNodeHasMeasureFunc(_nodeRef)) {
+            YGNodeSetMeasureFunc(_nodeRef, FC_Node_Yoga_1_14_measureFunc);
+        }
+    } else {
+        if (YGNodeHasMeasureFunc(_nodeRef)) {
+            YGNodeSetMeasureFunc(_nodeRef, NULL);
+        }
+    }
 }
 
 - (void)setStyleSize:(CGSize)size {
     YGNodeStyleSetWidth(_nodeRef, size.width);
     YGNodeStyleSetHeight(_nodeRef, size.height);
+}
+
+- (void)markDirty {
+    YGNodeMarkDirty(_nodeRef);
 }
 
 - (float)aspectRatio {

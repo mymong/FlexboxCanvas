@@ -23,6 +23,9 @@
 - (instancetype)initWithElement:(FCElement *)element {
     if (self = [super initWithElement:element]) {
         _node = [FC_Node node];
+        if ([self conformsToProtocol:@protocol(FC_Measurer)]) {
+            [_node setMeasurer:(id)self];
+        }
     }
     return self;
 }

@@ -20,11 +20,17 @@ static CGFloat FCRoundPixelValue(CGFloat value) {
     return ceilf(value * scale) / scale;
 }
 
+@interface FCTextComponent () <FC_Measurer>
+
+@end
+
 @implementation FCTextComponent
 
 - (Class)propsClass {
     return [FCTextProps class];
 }
+
+#pragma mark FCViewComponent
 
 - (Class)viewClass {
     return [FCTextView class];
@@ -45,71 +51,31 @@ static CGFloat FCRoundPixelValue(CGFloat value) {
     }
 }
 
-- (void)startNode {
-    [super startNode];
+#pragma mark <FC_Measurer>
+
+- (CGSize)measureInSize:(CGSize)size widthMode:(FC_MeasurerMode)widthMode heightMode:(FC_MeasurerMode)heightMode {
+    CGSize newSize = [self contentSizeThatFits:size];
+//    newSize.width += FCRoundPixelValue(0.1);
+//    newSize.height += FCRoundPixelValue(0.1);
+    if (FC_MeasurerMode_Exactly == widthMode) {
+        newSize.width = size.width;
+    }
+    if (FC_MeasurerMode_Exactly == heightMode) {
+        newSize.height = size.height;
+    }
+    return newSize;
 }
 
-- (NSUInteger)secondLayoutHierachy {
-    FCTextProps *props = [self props];
-    FCTextStyle *style = [props style];
-    FCTextSizeMode sizeMode = style.sizeMode;
-    
-    if (FCTextSizeModeFitWidth == sizeMode) {
-        CGSize styleSize = CGSizeMake(NAN, NAN);
-        [style getDimensions:&styleSize];
-        if (!isnan(styleSize.height)) {
-            return 0;
-        }
-        
-        UIEdgeInsets contentInsets = [style contentInsets];
-        CGSize layoutSize = [self.node frame].size;
-        if (layoutSize.width <= contentInsets.left + contentInsets.right) {
-            return 0;
-        }
-        
-        CGSize secondSize = CGSizeMake(layoutSize.width, CGFLOAT_MAX);
-        secondSize = [self sizeThatFits:secondSize contentInsets:contentInsets];
-        secondSize.width = layoutSize.width;
-        secondSize.height += FCRoundPixelValue(0.1);
-        [self.node setStyleSize:secondSize];
-        return 1;
-    }
-    else if (FCTextSizeModeFitHeight == sizeMode) {
-        CGSize styleSize = CGSizeMake(NAN, NAN);
-        [style getDimensions:&styleSize];
-        if (!isnan(styleSize.width)) {
-            return 0;
-        }
-        
-        UIEdgeInsets contentInsets = [style contentInsets];
-        CGSize layoutSize = [self.node frame].size;
-        if (layoutSize.height <= contentInsets.top + contentInsets.bottom) {
-            return 0;
-        }
-        
-        CGSize secondSize = CGSizeMake(CGFLOAT_MAX, layoutSize.height);
-        secondSize = [self sizeThatFits:secondSize contentInsets:contentInsets];
-        secondSize.height = layoutSize.height;
-        [self.node setStyleSize:secondSize];
-        return 1;
-    }
-    
-    return 0;
-}
+#pragma mark Private
 
-- (CGSize)sizeThatFits:(CGSize)size contentInsets:(UIEdgeInsets)contentInsets {
+- (CGSize)contentSizeThatFits:(CGSize)size {
     NSAttributedString *attributedText = [self makeAttributedText:self.props];
     if (!attributedText || 0 == attributedText.length) {
         return CGSizeZero;
     }
-    UIEdgeInsets insets = contentInsets;
-    size.width -= insets.left + insets.right;
-    size.height -= insets.top + insets.bottom;
     size = [attributedText boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading|NSStringDrawingTruncatesLastVisibleLine context:NULL].size;
     size.width = FCRoundPixelValue(size.width);
     size.height = FCRoundPixelValue(size.height);
-    size.width += insets.left + insets.right;
-    size.height += insets.top + insets.bottom;
     return size;
 }
 
