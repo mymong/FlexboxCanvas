@@ -27,7 +27,7 @@
 }
 
 - (BOOL)clipToBounds {
-    return (self.styleRef->overflow == FC_Overflow_Hidden);
+    return (self.styleRef->overflow != FC_Overflow_Visible);
 }
 
 - (void)set_opacity:(NSString *)str {
