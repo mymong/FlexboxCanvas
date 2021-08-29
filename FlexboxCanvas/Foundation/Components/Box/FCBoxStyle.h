@@ -6,12 +6,12 @@
 //
 
 #import "FCComponentParams.h"
-#import "FC_Style.h"
+#import "FCLayoutStyle.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FCBoxStyle : FCComponentParams
-@property (nonatomic, readonly) FC_Style *styleRef;
+@property (nonatomic, readonly) FCLayoutStyle *styleRef;
 - (void)setFromString:(NSString *)string;
 @end
 
@@ -19,6 +19,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getDimensions:(CGSize *)dimensions;
 - (UIEdgeInsets)border;
 - (UIEdgeInsets)contentInsets;
+@end
+
+@interface FCBoxStyle (EnumStrs)
+- (NSArray<NSString *> *)enumStrsOverflow;
 @end
 
 NS_ASSUME_NONNULL_END

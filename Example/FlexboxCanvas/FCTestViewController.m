@@ -60,4 +60,8 @@
     [self.canvasView setValue:string forManagedVariable:@"color"];
 }
 
+- (void)onScroll:(NSDictionary *)userInfo sender:(id)sender {
+    NSLog(@"%@", userInfo);
+}
+
 @end

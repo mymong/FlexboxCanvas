@@ -19,7 +19,7 @@ static NSArray<NSString *> *FCEnumStrsWrap;
 static NSArray<NSString *> *FCEnumStrsOverflow;
 static NSArray<NSString *> *FCEnumStrsDisplay;
 
-void FC_Style_EnumStrs_Setup(void) {
+void FCLayoutStyle_EnumStrs_Setup(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         FCEnumStrsDirection = @[@"inherit", @"ltr", @"rtl"];
@@ -28,29 +28,29 @@ void FC_Style_EnumStrs_Setup(void) {
         FCEnumStrsAlign = @[@"auto", @"flexStart", @"center", @"flexEnd", @"stretch", @"baseline", @"spaceBetween", @"spaceAround"];
         FCEnumStrsPositionType = @[@"relative", @"absolute"];
         FCEnumStrsWrap = @[@"noWrap", @"wrap", @"wrapReverse"];
-        FCEnumStrsOverflow = @[@"visible", @"hidden", @"scroll"];
+        FCEnumStrsOverflow = @[@"visible", @"hidden"/*, @"scroll"*/];
         FCEnumStrsDisplay = @[@"flex", @"none"];
     });
 }
 
 @implementation FCBoxStyle {
-   FC_Style _style;
+   FCLayoutStyle _style;
 }
 
-- (FC_Style *)styleRef {
+- (FCLayoutStyle *)styleRef {
    return &_style;
 }
 
 - (instancetype)init {
    if (self = [super init]) {
-       FC_Style_EnumStrs_Setup();
+       FCLayoutStyle_EnumStrs_Setup();
    }
    return self;
 }
 
 - (void)reset {
     [super reset];
-    FC_Style_Init(&_style);
+    FCLayoutStyleInit(&_style);
 }
 
 - (NSInteger)maxConnectorLevel {
@@ -59,7 +59,7 @@ void FC_Style_EnumStrs_Setup(void) {
 
 - (void)setFromString:(NSString *)string {
     NSParameterAssert(string && string.length);
-    NSDictionary *dictionary = [string fc_styleDictionary];
+    NSDictionary *dictionary = [string FCLayoutStyleDictionary];
     if (dictionary.count > 0) {
         [self setFromDictionary:dictionary];
     }
@@ -250,7 +250,7 @@ void FC_Style_EnumStrs_Setup(void) {
 
 - (void)set___marginStart:(NSString *)str {
     float val = [str fc_abs_floatValueWithDefault:NAN];
-    if (FC_GetIsRTL()) {
+    if (FCLayoutGetIsRTL()) {
         _style.margin[FC_Edge_Right] = val;
     } else {
         _style.margin[FC_Edge_Left] = val;
@@ -259,7 +259,7 @@ void FC_Style_EnumStrs_Setup(void) {
 
 - (void)set___marginEnd:(NSString *)str {
     float val = [str fc_abs_floatValueWithDefault:NAN];
-    if (FC_GetIsRTL()) {
+    if (FCLayoutGetIsRTL()) {
         _style.margin[FC_Edge_Left] = val;
     } else {
         _style.margin[FC_Edge_Right] = val;
@@ -268,7 +268,7 @@ void FC_Style_EnumStrs_Setup(void) {
 
 - (void)set___positionStart:(NSString *)str {
     float val = [str fc_abs_floatValueWithDefault:NAN];
-    if (FC_GetIsRTL()) {
+    if (FCLayoutGetIsRTL()) {
         _style.position[FC_Edge_Right] = val;
     } else {
         _style.position[FC_Edge_Left] = val;
@@ -277,7 +277,7 @@ void FC_Style_EnumStrs_Setup(void) {
 
 - (void)set___positionEnd:(NSString *)str {
     float val = [str fc_abs_floatValueWithDefault:NAN];
-    if (FC_GetIsRTL()) {
+    if (FCLayoutGetIsRTL()) {
         _style.position[FC_Edge_Left] = val;
     } else {
         _style.position[FC_Edge_Right] = val;
@@ -286,7 +286,7 @@ void FC_Style_EnumStrs_Setup(void) {
 
 - (void)set___paddingStart:(NSString *)str {
     float val = [str fc_abs_floatValueWithDefault:NAN];
-    if (FC_GetIsRTL()) {
+    if (FCLayoutGetIsRTL()) {
         _style.padding[FC_Edge_Right] = val;
     } else {
         _style.padding[FC_Edge_Left] = val;
@@ -295,7 +295,7 @@ void FC_Style_EnumStrs_Setup(void) {
 
 - (void)set___paddingEnd:(NSString *)str {
     float val = [str fc_abs_floatValueWithDefault:NAN];
-    if (FC_GetIsRTL()) {
+    if (FCLayoutGetIsRTL()) {
         _style.padding[FC_Edge_Left] = val;
     } else {
         _style.padding[FC_Edge_Right] = val;
@@ -304,7 +304,7 @@ void FC_Style_EnumStrs_Setup(void) {
 
 - (void)set___borderStart:(NSString *)str {
     float val = [str fc_abs_floatValueWithDefault:NAN];
-    if (FC_GetIsRTL()) {
+    if (FCLayoutGetIsRTL()) {
         _style.border[FC_Edge_Right] = val;
     } else {
         _style.border[FC_Edge_Left] = val;
@@ -313,7 +313,7 @@ void FC_Style_EnumStrs_Setup(void) {
 
 - (void)set___borderEnd:(NSString *)str {
     float val = [str fc_abs_floatValueWithDefault:NAN];
-    if (FC_GetIsRTL()) {
+    if (FCLayoutGetIsRTL()) {
         _style.border[FC_Edge_Left] = val;
     } else {
         _style.border[FC_Edge_Right] = val;
@@ -454,6 +454,14 @@ void FC_Style_EnumStrs_Setup(void) {
     if (!isnan(v)) {
         insets->bottom += v;
     }
+}
+
+@end
+
+@implementation FCBoxStyle (EnumStrs)
+
+- (NSArray<NSString *> *)enumStrsOverflow {
+    return FCEnumStrsOverflow;
 }
 
 @end

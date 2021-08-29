@@ -95,11 +95,9 @@ Node是布局节点，Flexbox计算Node Tree的布局关系，得到所有Node�
 9.  `shadowOffset` 阴影偏移
 10.  `shadowOpacity` 阴影透明度
 11. `shadowRadius` 阴影半径，羽化范围
-
 ### View Props
 1.  `nativeView`  自定义视图对象的标识名
 2.  `touchableOpacity` 触摸时是否有透明效果
-
 ### View Events
 1.  `onRef` 引用事件，当视图对象加入画布时触发，客户端持有引用视图时请注意使用`weak`声明
 2.  `onPress` 点击事件
@@ -119,6 +117,22 @@ Node是布局节点，Flexbox计算Node Tree的布局关系，得到所有Node�
 10.  `textShadowOffset` 文本阴影偏移
 11.  `textShadowRadius` 文本阴影模糊半径（羽化半径）
 12.  `numberOfLines` 文本最大行数，整数：0(无限制), 1, 2, 3, ...
+### Text Props
+1. `text` 文本内容
+
+## `<Image>` 图像视图
+### Image Style
+1. 继承自View Style
+2. `tintColor` 着色，将图像的非透明区域设置为统一的颜色
+3. `contentMode` 内容模式，枚举值："stretch", "contain", "cover", "repeat", "center", "top", "bottom", "left", "right", "topLeft", "topRight", "bottomLeft", "bottomRight"
+### Image Props
+1. `uri` 图像地址
+
+## `<Scroll>` 滚动视图
+### Scroll Style
+1. 继承自View Style
+### Scroll Events
+1. `onScroll` 滚动事件
 
 
 ## Installation

@@ -1,14 +1,14 @@
 PODS:
-  - FlexboxCanvas (0.2.1):
-    - FlexboxCanvas/ElementBuilder_TBXML_1_5 (= 0.2.1)
-    - FlexboxCanvas/Foundation (= 0.2.1)
-    - FlexboxCanvas/Node_Yoga_1_14 (= 0.2.1)
-  - FlexboxCanvas/ElementBuilder_TBXML_1_5 (0.2.1):
+  - FlexboxCanvas (0.2.2):
+    - FlexboxCanvas/ElementBuilder_TBXML_1_5 (= 0.2.2)
+    - FlexboxCanvas/Foundation (= 0.2.2)
+    - FlexboxCanvas/LayoutNode_Yoga_1_14 (= 0.2.2)
+  - FlexboxCanvas/ElementBuilder_TBXML_1_5 (0.2.2):
     - FlexboxCanvas/Foundation
     - TBXML (~> 1.5)
-  - FlexboxCanvas/Foundation (0.2.1):
+  - FlexboxCanvas/Foundation (0.2.2):
     - SDWebImage
-  - FlexboxCanvas/Node_Yoga_1_14 (0.2.1):
+  - FlexboxCanvas/LayoutNode_Yoga_1_14 (0.2.2):
     - FlexboxCanvas/Foundation
     - Yoga (~> 1.14)
   - SDWebImage (5.9.5):
@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  FlexboxCanvas: 14f1defa3e73337d52aa1c895059f52cfa85051e
+  FlexboxCanvas: f2a4bcd5aeb8dce7987b8add9e1f1216e59ba2f4
   SDWebImage: 0b2ba0d56479bf6a45ecddbfd5558bea93150d25
   TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
   Yoga: cff67a400f6b74dc38eb0bad4f156673d9aa980c

@@ -9,7 +9,7 @@
 #import "FCTextView.h"
 #import "FCTextProps.h"
 #import "FCTextStyle.h"
-#import "FC_Node.h"
+#import "FCLayoutNode.h"
 
 static CGFloat FCRoundPixelValue(CGFloat value) {
     static CGFloat scale;
@@ -20,7 +20,7 @@ static CGFloat FCRoundPixelValue(CGFloat value) {
     return ceilf(value * scale) / scale;
 }
 
-@interface FCTextComponent () <FC_Measurer>
+@interface FCTextComponent () <FCLayoutMeasure>
 
 @end
 
@@ -30,9 +30,7 @@ static CGFloat FCRoundPixelValue(CGFloat value) {
     return [FCTextProps class];
 }
 
-#pragma mark FCViewComponent
-
-- (Class)viewClass {
+- (Class)managedViewClass {
     return [FCTextView class];
 }
 
@@ -51,16 +49,16 @@ static CGFloat FCRoundPixelValue(CGFloat value) {
     }
 }
 
-#pragma mark <FC_Measurer>
+#pragma mark <FCLayoutMeasure>
 
-- (CGSize)measureInSize:(CGSize)size widthMode:(FC_MeasurerMode)widthMode heightMode:(FC_MeasurerMode)heightMode {
+- (CGSize)measureInSize:(CGSize)size widthMode:(FCLayoutMeasureMode)widthMode heightMode:(FCLayoutMeasureMode)heightMode {
     CGSize newSize = [self contentSizeThatFits:size];
 //    newSize.width += FCRoundPixelValue(0.1);
 //    newSize.height += FCRoundPixelValue(0.1);
-    if (FC_MeasurerMode_Exactly == widthMode) {
+    if (FCLayoutMeasureModeExactly == widthMode) {
         newSize.width = size.width;
     }
-    if (FC_MeasurerMode_Exactly == heightMode) {
+    if (FCLayoutMeasureModeExactly == heightMode) {
         newSize.height = size.height;
     }
     return newSize;

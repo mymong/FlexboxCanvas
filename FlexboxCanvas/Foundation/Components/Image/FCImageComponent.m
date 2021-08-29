@@ -8,12 +8,12 @@
 #import "FCImageComponent.h"
 #import "FCImageStyle.h"
 #import "FCImageProps.h"
-#import "FC_Node.h"
+#import "FCLayoutNode.h"
 #import <UIKit/UIKit.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <SDWebImage/SDImageCache.h>
 
-@interface FCImageComponent () <FC_Measurer>
+@interface FCImageComponent () <FCLayoutMeasure>
 @property (nonatomic) NSString *lastUri;
 @property (nonatomic) CGSize lastSize;
 @end
@@ -34,7 +34,7 @@
     return [FCImageProps class];
 }
 
-- (Class)viewClass {
+- (Class)managedViewClass {
     return [UIImageView class];
 }
 
@@ -78,16 +78,16 @@
     }
 }
 
-#pragma mark <FC_Measurer>
+#pragma mark <FCLayoutMeasure>
 
-- (CGSize)measureInSize:(CGSize)size widthMode:(FC_MeasurerMode)widthMode heightMode:(FC_MeasurerMode)heightMode {
+- (CGSize)measureInSize:(CGSize)size widthMode:(FCLayoutMeasureMode)widthMode heightMode:(FCLayoutMeasureMode)heightMode {
     CGSize newSize = [self contentSizeThatFits:size];
 //    newSize.width += FCRoundPixelValue(0.1);
 //    newSize.height += FCRoundPixelValue(0.1);
-    if (FC_MeasurerMode_Exactly == widthMode) {
+    if (FCLayoutMeasureModeExactly == widthMode) {
         newSize.width = size.width;
     }
-    if (FC_MeasurerMode_Exactly == heightMode) {
+    if (FCLayoutMeasureModeExactly == heightMode) {
         newSize.height = size.height;
     }
     return newSize;

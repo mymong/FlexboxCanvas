@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FlexboxCanvas'
-  s.version          = '0.2.1'
+  s.version          = '0.2.2'
   s.summary          = 'A UI development framework based on XML description and flexbox layout for iOS.'
   
 # This description is used to generate tags and improve search results.
@@ -51,8 +51,8 @@ Pod::Spec.new do |s|
     p.dependency 'TBXML', '~> 1.5'
   end
   
-  s.subspec 'Node_Yoga_1_14' do |p|
-    p.source_files = 'FlexboxCanvas/Node_Yoga_1_14'
+  s.subspec 'LayoutNode_Yoga_1_14' do |p|
+    p.source_files = 'FlexboxCanvas/LayoutNode_Yoga_1_14'
     p.dependency 'FlexboxCanvas/Foundation'
     p.dependency 'Yoga', '~> 1.14'
   end

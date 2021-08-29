@@ -13,12 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FCViewComponent : FCBoxComponent
 
-- (Class)viewClass;
+@property (nonatomic, readonly, nullable) __kindof UIView *managedView;
+- (Class)managedViewClass;
 - (UIView *)createManagedView;
 - (void)managedView:(UIView *)view applyProps:(FCViewProps *)props;
 - (BOOL)managedView:(UIView *)view buildEvents:(FCViewProps *)events;
 - (void)managedViewRemoveEvents:(UIView *)view;
-- (void)decideTouchableOfManagedView:(UIView *)view;
+- (void)managedViewDecideTouchable:(UIView *)view;
 
 @end
 

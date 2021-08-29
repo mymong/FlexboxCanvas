@@ -7,10 +7,10 @@
 
 #import "FCBoxComponent.h"
 #import "FCBoxProps.h"
-#import "FC_Node.h"
+#import "FCLayoutNode.h"
 
 @implementation FCBoxComponent {
-    id<FC_Node> _node;
+    id<FCLayoutNode> _node;
     CGRect _frame;
 }
 
@@ -22,25 +22,23 @@
 
 - (instancetype)initWithElement:(FCElement *)element {
     if (self = [super initWithElement:element]) {
-        _node = [FC_Node node];
-        if ([self conformsToProtocol:@protocol(FC_Measurer)]) {
+        _node = [FCLayoutNode node];
+        if ([self conformsToProtocol:@protocol(FCLayoutMeasure)]) {
             [_node setMeasurer:(id)self];
         }
     }
     return self;
 }
 
-- (void)startNode {
+- (void)configNodeTree {
     FCBoxProps *props = [self props];
     [_node setStyle:props.style.styleRef];
-}
-
-- (void)linkSubnodes {
+    
     NSArray<FCComponent *> *children = self.children;
     if (children) {
         NSMutableArray *subnodes = [NSMutableArray new];
         for (FCComponent *child in children) {
-            id<FC_Node> subnode = child.node;
+            id<FCLayoutNode> subnode = child.node;
             if (subnode) {
                 [subnodes addObject:child.node];
             }
@@ -51,22 +49,24 @@
     }
 }
 
-- (void)finishNode {
+- (void)decideChildFrames {
     CGPoint origin = self.frame.origin;
     for (FCComponent *child in self.children) {
-        id<FC_Node> node = child.node;
+        id<FCLayoutNode> node = child.node;
         if (node) {
             CGRect frame = node.frame;
             frame.origin.x += origin.x;
             frame.origin.y += origin.y;
             child.frame = frame;
+        } else {
+            child.frame = CGRectMake(origin.x, origin.y, 0, 0);
         }
     }
 }
 
 #pragma mark <FCComponentLayout>
 
-- (id<FC_Node>)node {
+- (id<FCLayoutNode>)node {
     return _node;
 }
 

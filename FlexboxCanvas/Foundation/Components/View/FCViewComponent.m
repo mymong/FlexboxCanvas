@@ -9,27 +9,26 @@
 #import "FCViewProps.h"
 #import "FCViewStyle.h"
 #import "FCCanvas.h"
-#import "FC_Node.h"
+#import "FCLayoutNode.h"
 #import "UIView+FCViewEvents.h"
 #import "UIView+FCBorderLayer.h"
 #import "UIGestureRecognizer+FCEventRecognizer.h"
 #import "FCTouchGestureRecognizer.h"
 
 @implementation FCViewComponent {
-    UIView *_view;
-    BOOL _touchable;
+    BOOL _managedViewTouchable;
 }
 
 - (Class)propsClass {
     return [FCViewProps class];
 }
 
-- (Class)viewClass {
+- (Class)managedViewClass {
     return [UIView class];
 }
 
 - (UIView *)createManagedView {
-    return [[self viewClass] new];
+    return [[self managedViewClass] new];
 }
 
 - (void)managedView:(UIView *)view applyProps:(FCViewProps *)props {
@@ -143,22 +142,23 @@
     view.fc_gesture_onLongPress = nil;
 }
 
-- (void)decideTouchableOfManagedView:(UIView *)view {
-    if (!_touchable) {
+- (void)managedViewDecideTouchable:(UIView *)view {
+    BOOL isTouchble = _managedViewTouchable;
+    if (!isTouchble) {
         for (FCComponent *child in self.children) {
             if ([child isTouchable]) {
-                _touchable = YES;
+                isTouchble = YES;
                 break;
             }
         }
     }
-    view.userInteractionEnabled = _touchable;
+    view.userInteractionEnabled = isTouchble;
 }
 
 #pragma mark Private
 
 - (UIView *)decideManagedView:(FCViewProps *)props {
-    Class clazz = [self viewClass];
+    Class clazz = [self managedViewClass];
     
     UIView *view;
     
@@ -207,20 +207,20 @@
 #pragma mark FCComponent
 
 - (void)removeFromParent {
-    if (_view) {
-        [self managedViewRemoveEvents:_view];
-        if (_view.superview) {
-            [_view removeFromSuperview];
+    if (_managedView) {
+        [self managedViewRemoveEvents:_managedView];
+        if (_managedView.superview) {
+            [_managedView removeFromSuperview];
         }
-        _view = nil;
+        _managedView = nil;
     }
     
     [super removeFromParent];
 }
 
-- (void)finishNode {
+- (void)decideChildFrames {
     for (FCComponent *child in self.children) {
-        id<FC_Node> node = child.node;
+        id<FCLayoutNode> node = child.node;
         if (node) {
             child.frame = [node frame];
         } else {
@@ -229,14 +229,14 @@
     }
 }
 
-- (void)startManagedView {
+- (void)buildManagedView {
     FCViewProps *props = [self props];
     
     UIView *superview = self.parent ? self.parent.view : nil;
     if (!superview) {
         //该组件已被删除
-        if (_view && _view.superview) {
-            [_view removeFromSuperview];
+        if (_managedView && _managedView.superview) {
+            [_managedView removeFromSuperview];
         }
         return;
     }
@@ -246,8 +246,8 @@
     UIView *nextView = [self decideManagedView:props];
     if (!nextView) {
         //创建视图失败
-        if (_view && _view.superview) {
-            [_view removeFromSuperview];
+        if (_managedView && _managedView.superview) {
+            [_managedView removeFromSuperview];
         }
         return;
     }
@@ -255,7 +255,7 @@
     nextView.frame = frame;
     
     [self managedView:nextView applyProps:props];
-    _touchable = [self managedView:nextView buildEvents:props];
+    _managedViewTouchable = [self managedView:nextView buildEvents:props];
     
     //添加到父视图
     if (nextView.superview != superview) {
@@ -268,19 +268,19 @@
     }
     
     //移除旧视图
-    if (_view != nextView) {
-        if (_view && _view.superview) {
-            [_view removeFromSuperview];
+    if (_managedView != nextView) {
+        if (_managedView && _managedView.superview) {
+            [_managedView removeFromSuperview];
         }
-        _view = nextView;
+        _managedView = nextView;
     }
 }
 
 - (void)moveManagedView {
-    if (_view) {
-        _view.frame = [self frame];
+    if (_managedView) {
+        _managedView.frame = [self frame];
         
-        FCBorderLayer *borderLayer = _view.fc_borderLayer;
+        FCBorderLayer *borderLayer = _managedView.fc_borderLayer;
         if (borderLayer) {
             [borderLayer setNeedsLayout];
         }
@@ -288,14 +288,14 @@
 }
 
 - (void)finishManagedView {
-    if (_view) {
-        [self decideTouchableOfManagedView:_view];
+    if (_managedView) {
+        [self managedViewDecideTouchable:_managedView];
     }
 }
 
 - (BOOL)isTouchable {
-    if (_view) {
-        return _view.userInteractionEnabled;
+    if (_managedView) {
+        return _managedView.userInteractionEnabled;
     }
     return NO;
 }
@@ -303,7 +303,7 @@
 #pragma mark <FCComponentParent>
 
 - (UIView *)view {
-    return _view;
+    return _managedView;
 }
 
 #pragma mark Events
@@ -318,12 +318,12 @@
 }
 
 - (void)onPress:(UITapGestureRecognizer *)gesture {
-    [self sendEvent:gesture.fc_event message:gesture.fc_message userInfo:nil sender:_view];
+    [self sendEvent:gesture.fc_event message:gesture.fc_message userInfo:nil sender:_managedView];
 }
 
 - (void)onLongPress:(UILongPressGestureRecognizer *)gesture {
     if (gesture.state == UIGestureRecognizerStateBegan) {
-        [self sendEvent:gesture.fc_event message:gesture.fc_message userInfo:nil sender:_view];
+        [self sendEvent:gesture.fc_event message:gesture.fc_message userInfo:nil sender:_managedView];
     }
 }
 

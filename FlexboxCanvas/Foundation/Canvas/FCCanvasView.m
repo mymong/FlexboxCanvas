@@ -36,7 +36,7 @@
 
 - (BOOL)loadElement:(FCElement *)element {
     if (element) {
-        [self.renderer loadWithElement:element];
+        [self.renderer reload:element];
         return YES;
     } else {
         return NO;
