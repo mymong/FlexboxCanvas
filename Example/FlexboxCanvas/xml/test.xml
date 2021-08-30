@@ -20,6 +20,8 @@
     </Box>
     <Box style="width:200; height:200">
         <Scroll style="backgroundColor:yellow;" onScroll="onScroll">
+            <LinearGradient style="width:150; height:150"/>
+            <RadialGradient style="width:150; height:150"/>
             <View style="width:150; height:150; backgroundColor:red"/>
             <View style="width:350; height:150; backgroundColor:green"/>
             <View style="width:150; height:150; backgroundColor:blue"/>

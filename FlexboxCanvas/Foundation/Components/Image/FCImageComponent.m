@@ -6,8 +6,8 @@
 //
 
 #import "FCImageComponent.h"
-#import "FCImageStyle.h"
 #import "FCImageProps.h"
+#import "FCImageStyle.h"
 #import "FCLayoutNode.h"
 #import <UIKit/UIKit.h>
 #import <SDWebImage/UIImageView+WebCache.h>

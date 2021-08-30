@@ -10,7 +10,6 @@
 #import "FCElement.h"
 #import "FCComponentParams.h"
 #import "FCComponentAttributes.h"
-#import "NSString+FCStyleString.h"
 
 @interface FCComponent ()
 @property (nonatomic, readonly) FCComponentAttributes *attributes;

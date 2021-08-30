@@ -1,5 +1,5 @@
 //
-//  NSString+FCComponentStyleString.h
+//  NSString+FCStyleString.h
 //  FlexboxCanvas
 //
 //  Created by Guang Yang on 2021/7/31.
@@ -9,8 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSString (FCComponentStyleString)
-- (NSDictionary<NSString *, NSString *> *)FCLayoutStyleDictionary;
+@interface NSString (FCStyleString)
+- (NSDictionary<NSString *, NSString *> *)fc_styleDictionary;
 @end
 
 NS_ASSUME_NONNULL_END

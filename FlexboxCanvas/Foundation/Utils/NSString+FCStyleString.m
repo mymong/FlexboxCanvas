@@ -1,23 +1,22 @@
 //
-//  NSString+FCComponentStyleString.m
+//  NSString+FCStyleString.m
 //  FlexboxCanvas
 //
 //  Created by Guang Yang on 2021/7/31.
 //
 
 #import "NSString+FCStyleString.h"
+#import "FCSeparators.h"
 
-#define FCComponentStylePairsSeparator @";"
-#define FCComponentStyleKeyValueSeparator @":"
 
-@implementation NSString (FCComponentStyleString)
+@implementation NSString (FCStyleString)
 
 - (void)fc_enumStylePairsWithBlock:(void(^)(NSString *key, NSString *value))block {
     NSRange range; NSString *key, *value;
-    NSArray *pairs = [self componentsSeparatedByString:FCComponentStylePairsSeparator];
+    NSArray *pairs = [self componentsSeparatedByString:FCPairSeparator];
     
     for (NSString *pair in pairs) {
-        range = [pair rangeOfString:FCComponentStyleKeyValueSeparator];
+        range = [pair rangeOfString:FCKeyValueSeparator];
         if (NSNotFound == range.location) {
             key = [pair stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
             if (key.length > 0) {
@@ -36,7 +35,7 @@
     }
 }
 
-- (NSDictionary<NSString *, NSString *> *)FCLayoutStyleDictionary {
+- (NSDictionary<NSString *, NSString *> *)fc_styleDictionary {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     [self fc_enumStylePairsWithBlock:^(NSString *key, NSString *value) {
         dictionary[key] = value;

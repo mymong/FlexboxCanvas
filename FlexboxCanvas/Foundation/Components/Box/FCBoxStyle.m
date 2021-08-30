@@ -59,7 +59,7 @@ void FCLayoutStyle_EnumStrs_Setup(void) {
 
 - (void)setFromString:(NSString *)string {
     NSParameterAssert(string && string.length);
-    NSDictionary *dictionary = [string FCLayoutStyleDictionary];
+    NSDictionary *dictionary = [string fc_styleDictionary];
     if (dictionary.count > 0) {
         [self setFromDictionary:dictionary];
     }
