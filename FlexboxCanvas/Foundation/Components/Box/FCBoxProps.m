@@ -15,19 +15,13 @@
 
 - (void)reset {
     [super reset];
-    _style = nil;
+    _style = [[self styleClass] new];
 }
 
 - (void)set_style:(NSString *)str {
-    if (str.length > 0) {
-        if (_style) {
-            [_style reset];
-        } else {
-            _style = [[self styleClass] new];
-        }
+    [_style reset];
+    if (str && str.length > 0) {
         [_style setFromString:str];
-    } else {
-        _style = nil;
     }
 }
 
