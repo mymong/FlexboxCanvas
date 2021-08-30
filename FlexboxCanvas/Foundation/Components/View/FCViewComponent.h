@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (Class)managedViewClass;
 - (UIView *)createManagedView;
 - (void)managedView:(UIView *)view applyProps:(FCViewProps *)props;
-- (BOOL)managedView:(UIView *)view buildEvents:(FCViewProps *)events;
+- (BOOL)managedView:(UIView *)view buildEvents:(FCViewProps *)props;
 - (void)managedViewRemoveEvents:(UIView *)view;
 - (void)managedViewDecideTouchable:(UIView *)view;
 

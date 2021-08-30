@@ -131,7 +131,7 @@ void FCLayoutStyle_EnumStrs_Setup(void) {
 }
 
 - (void)set_position:(NSString *)str {
-    float val = [str fc_abs_floatValueWithDefault:NAN];
+    float val = [str fc_floatValueWithDefault:NAN];
     for (FC_Edge i = 0; i < FC_Edge_Count; i ++) {
         _style.position[i] = val;
     }
@@ -187,13 +187,13 @@ void FCLayoutStyle_EnumStrs_Setup(void) {
 }
 
 - (void)set__positionHorizontal:(NSString *)str {
-    float val = [str fc_abs_floatValueWithDefault:NAN];
+    float val = [str fc_floatValueWithDefault:NAN];
     _style.position[FC_Edge_Left] = val;
     _style.position[FC_Edge_Right] = val;
 }
 
 - (void)set__positionVertical:(NSString *)str {
-    float val = [str fc_abs_floatValueWithDefault:NAN];
+    float val = [str fc_floatValueWithDefault:NAN];
     _style.position[FC_Edge_Top] = val;
     _style.position[FC_Edge_Bottom] = val;
 }
@@ -267,7 +267,7 @@ void FCLayoutStyle_EnumStrs_Setup(void) {
 }
 
 - (void)set___positionStart:(NSString *)str {
-    float val = [str fc_abs_floatValueWithDefault:NAN];
+    float val = [str fc_floatValueWithDefault:NAN];
     if (FCLayoutGetIsRTL()) {
         _style.position[FC_Edge_Right] = val;
     } else {
@@ -276,7 +276,7 @@ void FCLayoutStyle_EnumStrs_Setup(void) {
 }
 
 - (void)set___positionEnd:(NSString *)str {
-    float val = [str fc_abs_floatValueWithDefault:NAN];
+    float val = [str fc_floatValueWithDefault:NAN];
     if (FCLayoutGetIsRTL()) {
         _style.position[FC_Edge_Left] = val;
     } else {
@@ -339,19 +339,19 @@ void FCLayoutStyle_EnumStrs_Setup(void) {
 }
 
 - (void)set____positionLeft:(NSString *)str {
-    _style.position[FC_Edge_Left] = [str fc_abs_floatValueWithDefault:NAN];
+    _style.position[FC_Edge_Left] = [str fc_floatValueWithDefault:NAN];
 }
 
 - (void)set____positionTop:(NSString *)str {
-    _style.position[FC_Edge_Top] = [str fc_abs_floatValueWithDefault:NAN];
+    _style.position[FC_Edge_Top] = [str fc_floatValueWithDefault:NAN];
 }
 
 - (void)set____positionRight:(NSString *)str {
-    _style.position[FC_Edge_Right] = [str fc_abs_floatValueWithDefault:NAN];
+    _style.position[FC_Edge_Right] = [str fc_floatValueWithDefault:NAN];
 }
 
 - (void)set____positionBottom:(NSString *)str {
-    _style.position[FC_Edge_Bottom] = [str fc_abs_floatValueWithDefault:NAN];
+    _style.position[FC_Edge_Bottom] = [str fc_floatValueWithDefault:NAN];
 }
 
 - (void)set____paddingLeft:(NSString *)str {

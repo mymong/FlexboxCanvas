@@ -27,4 +27,12 @@
             <View style="width:150; height:150; backgroundColor:blue"/>
         </Scroll>
     </Box>
+    <Slider style="width:300; height:40; value=0.5; tipsSpace:8;" thumbKey="thumb" tipsKey="tips" onChange="onSliderChange">
+        <View key="thumb" style="width:30; height:30; backgroundColor:red; borderRadius:8">
+            <Text style="flex:1; textAlign:center;" text="😊"/>
+        </View>
+        <View key="tips" style="width:120; height:40; backgroundColor:blue">
+            <Text style="flex:1; textAlign:center;" text="Hello"/>
+        </View>
+    </Slider>
 </Box>
