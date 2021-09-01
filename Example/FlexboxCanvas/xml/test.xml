@@ -10,7 +10,7 @@
         <View style="width:20; height:40; marginHorizontal:2; borderRadius:10; borderCorners:bottom; backgroundColor:green"/>
         <View style="width:20; height:20; marginLeft:2; borderRadius:10; borderCorners:topRight; backgroundColor:blue"/>
     </Box>
-    <View style="border:10; borderTop:20; borderBottom:1; borderRight:0; borderRadius:30; borderCorners:left; borderColor:black; backgroundColor:blue; justifyContent:center;">
+    <View style="border:10; borderTop:20; borderBottom:1; borderRight:0; borderRadius:30; borderCorners:left; borderColor:black; backgroundColor:blue; justifyContent:center; thornSize:16,8">
         <View nativeView="nativeLabelView" style="width:150; height:30; backgroundColor:yellow"/>
         <Text style="width:150; textAlign:center; paddingHorizontal:16; fontStyle:italic; backgroundColor:skyBlue" text="Hello World FlexboxCanvas" link="https://github.com/mymong/FlexboxCanvas"/>
     </View>
@@ -27,11 +27,11 @@
             <View style="width:150; height:150; backgroundColor:blue"/>
         </Scroll>
     </Box>
-    <Slider style="width:300; height:40; value=0.5; tipsSpace:8;" thumbKey="thumb" tipsKey="tips" onChange="onSliderChange">
+    <Slider style="width:300; height:40; value=0.5; tipsSpace:16;" thumbKey="thumb" tipsKey="tips" onChange="onSliderChange">
         <View key="thumb" style="width:30; height:30; backgroundColor:red; borderRadius:8">
             <Text style="flex:1; textAlign:center;" text="😊"/>
         </View>
-        <View key="tips" style="width:120; height:40; backgroundColor:blue">
+        <View key="tips" style="width:120; height:40; backgroundColor:green; borderColor:blue; borderRadius:8; thornSize:16,8">
             <Text style="flex:1; textAlign:center;" text="Hello"/>
         </View>
     </Slider>

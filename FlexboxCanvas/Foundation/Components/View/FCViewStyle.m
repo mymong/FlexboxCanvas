@@ -9,6 +9,8 @@
 #import "UIColor+FCColor.h"
 #import "NSString+FCFloatValue.h"
 #import "NSString+FCSizeValue.h"
+#import "NSString+FCPointValue.h"
+#import "NSArray+FCEnumValue.h"
 #import "FCSeparators.h"
 
 @implementation FCViewStyle
@@ -24,6 +26,10 @@
     _shadowOffset = CGSizeZero;
     _shadowOpacity = 0;
     _shadowRadius = 0;
+    _thornSize = CGSizeZero;
+    _thornEdge = FCBorderThornEdgeBottom;
+    _thornLocation = 0.5;
+    _thornSolid = NO;
 }
 
 - (BOOL)clipToBounds {
@@ -95,6 +101,22 @@
 
 - (void)set_shadowRadius:(NSString *)str {
     _shadowRadius = [str fc_floatValueWithDefault:0 minValue:0];
+}
+
+- (void)set_thornSize:(NSString *)str {
+    _thornSize = [str fc_sizeValueWithDefault:CGSizeZero];
+}
+
+- (void)set_thornEdge:(NSString *)str {
+    _thornEdge = (FCBorderThornEdge)[@[@"left", @"top", @"right", @"bottom"] fc_enumValueForStr:str defaultValue:FCBorderThornEdgeBottom];
+}
+
+- (void)set_thornLocation:(NSString *)str {
+    _thornLocation = [str fc_floatValueWithDefault:0.5 minValue:0 maxValue:1];
+}
+
+- (void)set_thornSolid:(NSString *)str {
+    _thornSolid = [str boolValue];
 }
 
 @end

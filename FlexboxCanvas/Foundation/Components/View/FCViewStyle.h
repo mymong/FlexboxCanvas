@@ -6,6 +6,7 @@
 //
 
 #import "FCBoxStyle.h"
+#import "FCBorderThornEdge.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CGSize shadowOffset;
 @property (nonatomic, readonly) float shadowOpacity;
 @property (nonatomic, readonly) float shadowRadius;
+@property (nonatomic, readonly) CGSize thornSize;
+@property (nonatomic, readonly) FCBorderThornEdge thornEdge;
+@property (nonatomic, readonly) CGFloat thornLocation;
+@property (nonatomic, readonly) BOOL thornSolid;
 @end
 
 NS_ASSUME_NONNULL_END

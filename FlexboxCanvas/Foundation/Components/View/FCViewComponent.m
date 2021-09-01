@@ -61,7 +61,11 @@
     }
     
     FCBorderLayer *borderLayer = view.fc_borderLayer;
-    if (style.borderRadius > 0 || !UIEdgeInsetsEqualToEdgeInsets(style.border, UIEdgeInsetsZero)) {
+    BOOL hasCorner = (style.borderRadius > 0 && style.borderCorners != 0);
+    BOOL hasBorder = !UIEdgeInsetsEqualToEdgeInsets(style.border, UIEdgeInsetsZero);
+    BOOL hasThorn = !CGSizeEqualToSize(style.thornSize, CGSizeZero);
+    
+    if (hasCorner || hasBorder || hasThorn) {
         if (!borderLayer) {
             view.fc_borderLayer = borderLayer = [FCBorderLayer layer];
         }
@@ -69,6 +73,10 @@
         borderLayer.insets = style.border;
         borderLayer.radius = style.borderRadius;
         borderLayer.corners = style.borderCorners;
+        borderLayer.thornSize = style.thornSize;
+        borderLayer.thornEdge = style.thornEdge;
+        borderLayer.thornLocation = style.thornLocation;
+        borderLayer.thornSolid = style.thornSolid;
         [borderLayer setNeedsLayout];
     } else {
         if (borderLayer) {
